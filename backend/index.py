@@ -12,16 +12,6 @@ def start_page():
     if forms.PflanzeForm().validate_on_submit():
         if request.form.get('post_header') == 'update pflanze':
             pflanze_form = forms.PflanzeForm()
-            #id = request.form.get('pflanze_to_update')
-            #pflanze = Pflanze.query.filter_by(id = id)
-            #pflanze.update({
-            #             'name' : pflanze_form.name.data,
-            #             'wissenschaft_name' : pflanze_form.wissenschaft_name.data,
-            #             'familie' : pflanze_form.familie.data,
-            #             'vegetationszone' : pflanze_form.vegetationszone.data,
-            #             'will_sonne' : pflanze_form.will_sonne.data,
-            #             'gefahr' : pflanze_form.gefahr.data,})
-            
             Pflanze.query.filter_by(id =      
                 request.form.get('pflanze_to_update')).update({
                          'name' : pflanze_form.name.data,
@@ -32,6 +22,9 @@ def start_page():
                          'gefahr' : pflanze_form.gefahr.data,})
             
             db.session.commit()
+
+            #Seiten-Refresh
+            return redirect(url_for('start_page'))
         else:
             
             #Instanz der Pflanze-Klasse anlegen
@@ -48,7 +41,7 @@ def start_page():
             db.session.commit()
         
         
-            #was macht das Folgende?
+            #Seiten-Refresh
             return redirect(url_for('start_page'))
     
     pflanzen = Pflanze.query.all()
