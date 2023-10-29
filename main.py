@@ -6,8 +6,8 @@
 #import os
 import sys
 sys.path.append('backend')
-import index
-from config import app
+import backend.index
+from backend.index import app
 #from config import db
 
 #CASA from sqlalchemy_imageattach.entity import Image, image_attachment
@@ -43,5 +43,5 @@ from config import app
     #return "<h1>Hello, Hydroflora!</h1><a href='https://google.de'>Google</a>" # HTML Code für Titel und Link, Chat Messenger BEREIT
     #return render_template('index.html')
 
-if __name__ == "__main__": # Ausführen
+if __name__ == "__main__": # Ausführen direkt
     app.run(debug=True) # Starten
