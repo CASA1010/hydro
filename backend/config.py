@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from flask_wtf.csrf import CSRFProtect
 
-app = Flask(__name__, template_folder='../templates') # Variable app mit Info vom Flask Proyekt
+app = Flask(__name__, template_folder='../templates', static_folder ='../static') #Verbindung HTML - CSS Teil 1
 
 #Konfiguration der Datenbank
 basedir = os.path.abspath(os.path.dirname(__file__))

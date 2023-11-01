@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from datetime import date
 
-#Definition des GUI-Eingabeformulars für neue / zu ändernde Pflanzen
+#Definition des GUI-Eingabeformulars für neue / zu ändernde Pflanzen todo esto estaba bien
 class PflanzeForm(FlaskForm):
     name = TextAreaField('Name', 
                          validators = [DataRequired(),         
@@ -23,5 +23,10 @@ class PflanzeForm(FlaskForm):
     gefahr = TextAreaField('Gefahr', 
                          validators = [DataRequired(),         
                          Length(min=1, max=40)])
-    submit = SubmitField('Submit')
+    anlegen = SubmitField('Anlegen')
+    aendern = SubmitField('Ändern')
+    loeschen = SubmitField('Löschen')
+    abbrechen = SubmitField('Abbrechen')
+    
+
 

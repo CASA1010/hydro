@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pflanze-Details</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-s">
+    <link href="../static/styles.css" rel="stylesheet"> <!--Verbindung HTML - CSS Teil 2-->
+</head>
+<body> <!-- Hier ist was wir sehen können und wir nehemen eine erweiterung in CSS (aussehen)-->
+  <h1>Hydroflora</h1>
+  <p>Die Kunst der Hydrokultur!</p>
+
+  <div>
+    {% for pflanze in pflanzen %}
+
+      <table>
+      <form method="POST" action="">
+      <thead>
+        <tr>
+          <th>Pflanzenname</th>
+          <th>Wissenschaftl. Name</th>
+          <th>Familie</th>
+          <th>Vegetationszone</th>
+          <th>Standort</th>
+          <th>Gefahr</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ pflanze_form.hidden_tag() }}
+          {{ pflanze_form.name(placeholder = "Name") }}</td>
+          <td>{{ pflanze_form.wissenschaft_name(placeholder = "Wissenschaftl. Name") }}</td>
+            <td>{{ pflanze_form.familie(placeholder = "Familie") }}</td>
+              <td>{{ pflanze_form.vegetationszone(placeholder = "Vegetationszone")}}</td>
+                <td>{{ pflanze_form.will_sonne(placeholder = "Standort")}}</td>
+                  <td>{{ pflanze_form.gefahr(placeholder = "Gefahr")}}
+          <input type="hidden" name="post_header" value="update pflanze">      
+          <input type="hidden" name="pflanze_to_update" value="{{pflanze.id}}"></td>
+          <td>{{ pflanze_form.abbrechen() }}</td>
+         <td>{{ pflanze_form.aendern() }}</td>
+         <td>{{ pflanze_form.loeschen() }}</td>
+        </tr>
+      </tbody>
+      </form>
+      </table>
+
+    {% endfor %}
+
+  </div>
+</body>
+</html>

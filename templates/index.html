@@ -1,45 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Meine Webseite</title>
-<head> <!-- Info, die nicht angezeigt werden-->
+    <title>Meine Webseite</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-s">
-    <title>Document</title>
-
-    <!-- Hier können wir verschiede Elemente von bootstrap einzubinden-->
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link href="../static/styles.css" rel="stylesheet"> <!--Verbindung HTML - CSS Teil 2-->
 </head>
 <body> <!-- Hier ist was wir sehen können und wir nehemen eine erweiterung in CSS (aussehen)-->
   <h1>Hydroflora</h1>
   <p>Die Kunst der Hydrokultur!</p>
-  <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"></a>
-    </div>
-  </nav>
-  <div class="container"> <!--Diff Container, wo ich Inhalt einfügen kann-->
-  </div>
-
-
-  <div class="d-flex justify-content-end mt-5">
-    <div class="card">
-      <div class="card-body"> <!--Chat Nachricht-->
-          This is some text within a card body.
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-start">
-    <div class="card">
-      <div class="card-body"> <!--Chat Nachricht-->
-        This is some text within a card body.
-      </div>
-    </div>
-  </div>
 
   <form method="POST" action="">
     {{ pflanze_form.hidden_tag() }}
@@ -49,35 +19,35 @@
       {{ pflanze_form.vegetationszone() }}
       {{ pflanze_form.will_sonne() }}
       {{ pflanze_form.gefahr() }}
-      {{ pflanze_form.submit() }}
+      {{ pflanze_form.anlegen() }}
   </form>
   <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Wissenschaftl. Name</th>
+          <th>Familie</th>
+          <th>Vegetationszone</th>
+          <th>Standort</th>
+          <th>Gefahr</th>
+          <th>Aktion</th>
+        </tr>
+      </thead>
     {% for pflanze in pflanzen %}
-      <ul>
-        <li>
-      Pflanzenname: {{pflanze.name}}
-      Wissenschaftl. Name: {{pflanze.wissenschaft_name}}
-      Familie: {{pflanze.familie}}
-      Vegetationszone: {{pflanze.vegetationszone}}
-      Standort: {{pflanze.will_sonne}}
-      Gefahr: {{pflanze.gefahr}}
-        </li>
-      </ul>
-
-      <form method="POST" action="">
-        {{ pflanze_form.hidden_tag() }}
-          {{ pflanze_form.name(placeholder = "Name") }}
-          {{ pflanze_form.wissenschaft_name(placeholder = "Wissenschaftl. Name") }}
-          {{ pflanze_form.familie(placeholder = "Familie") }}
-          {{ pflanze_form.vegetationszone(placeholder = "Vegetationszone")}}
-          {{ pflanze_form.will_sonne(placeholder = "Vegetationszone")}}
-          {{ pflanze_form.gefahr(placeholder = "Gefahr")}}
-          <input type="hidden" name="post_header" value="update pflanze">      
-          <input type="hidden" name="pflanze_to_update" value="{{pflanze.id}}"> 
-         {{ pflanze_form.submit() }}
-      </form>
-
+      <tbody>
+        <tr>
+          <td>{{pflanze.name}}</td>
+          <td>{{pflanze.wissenschaft_name}}</td>
+          <td>{{pflanze.familie}}</td>
+          <td>{{pflanze.vegetationszone}}</td>
+          <td>{{pflanze.will_sonne}}</td>
+          <td>{{pflanze.gefahr}}</td>
+          <td><a href="{{url_for('form_pflanze_details', id=pflanze.id)}}">Details</a></td>
+        </tr>
+      </tbody>
     {% endfor %}
+  </table>
   </div>
 </body>
 </html>
