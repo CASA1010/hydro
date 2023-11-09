@@ -28,6 +28,7 @@
           <th>Name</th>
           <th>Wissenschaftl. Name</th>
           <th>Familie</th>
+          <th>Bild</th>
           <th>Vegetationszone</th>
           <th>Standort</th>
           <th>Gefahr</th>
@@ -40,6 +41,7 @@
           <td>{{pflanze.name}}</td>
           <td>{{pflanze.wissenschaft_name}}</td>
           <td>{{pflanze.familie}}</td>
+          <td><img src="{{'/static/uploads/pflanze_' + pflanze.id|string + '.jpg'}}" alt="" height="50" width="50"></td>
           <td>{{pflanze.vegetationszone}}</td>
           <td>{{pflanze.will_sonne}}</td>
           <td>{{pflanze.gefahr}}</td>

@@ -2,6 +2,21 @@ from config import app, db, Pflanze
 from flask import render_template, redirect, url_for, request
 import forms
 
+#Upload-Seite
+@app.route('/pflanze/<id>/upload', methods = ['GET', 'POST'])
+def upload_file(id):
+    pflanze_form = forms.PflanzeForm()
+    if request.method == 'POST':
+        f = request.files['bild']
+        str = app.config['UPLOAD_FOLDER'] + '/Pflanze_' + id + '.jpg'
+        f.save(str)
+        return redirect(url_for('start_page'))
+    else:
+        return render_template('file_upload.html',
+                               pflanze_form = pflanze_form,
+                               id = id)
+
+#Seite mit der Detailsicht einer Pflanze
 @app.route('/Pflanze/<id>', methods = ['GET', 'POST'])
 def form_pflanze_details(id):
     pflanze_form = forms.PflanzeForm()
@@ -26,6 +41,8 @@ def form_pflanze_details(id):
             db.session.commit()
         
             return redirect(url_for('start_page'))
+    elif 'bild_hochladen' in request.form:
+        return redirect(url_for('upload_file', id=id))
     else:
         for pflanze in pflanzen:
             pflanze_form.name.data = pflanze.name
@@ -40,6 +57,7 @@ def form_pflanze_details(id):
                         )
         
 
+#Übersichts-Seite
 @app.route('/', methods = ['GET','POST'])
 @app.route('/index', methods = ['GET','POST'])
 def start_page():

@@ -11,6 +11,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.db')
 db = SQLAlchemy(app)
 
+#Konfigurstion der Datei-Ablage
+app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder, 'uploads')
 #Konfiguration für CSRF-Protection (Security-feature; wird benötigt, sobald man per Browser Daten im Backend ändern möchte)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY

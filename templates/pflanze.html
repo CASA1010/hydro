@@ -21,6 +21,7 @@
           <th>Pflanzenname</th>
           <th>Wissenschaftl. Name</th>
           <th>Familie</th>
+          <th>Bild</th>
           <th>Vegetationszone</th>
           <th>Standort</th>
           <th>Gefahr</th>
@@ -32,6 +33,7 @@
           {{ pflanze_form.name(placeholder = "Name") }}</td>
           <td>{{ pflanze_form.wissenschaft_name(placeholder = "Wissenschaftl. Name") }}</td>
             <td>{{ pflanze_form.familie(placeholder = "Familie") }}</td>
+            <td><img src="{{'/static/uploads/pflanze_' + pflanze.id|string + '.jpg'}}" alt="" height="50" width="50"></td>
               <td>{{ pflanze_form.vegetationszone(placeholder = "Vegetationszone")}}</td>
                 <td>{{ pflanze_form.will_sonne(placeholder = "Standort")}}</td>
                   <td>{{ pflanze_form.gefahr(placeholder = "Gefahr")}}
@@ -40,6 +42,7 @@
           <td>{{ pflanze_form.abbrechen() }}</td>
          <td>{{ pflanze_form.aendern() }}</td>
          <td>{{ pflanze_form.loeschen() }}</td>
+         <td>{{ pflanze_form.bild_hochladen() }}</td>
         </tr>
       </tbody>
       </form>
