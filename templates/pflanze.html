@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-s">
-    <link href="../static/styles.css" rel="stylesheet"> <!--Verbindung HTML - CSS Teil 2-->
+    <link href="../static/pflanze_styles.css" rel="stylesheet"> <!--Verbindung HTML - CSS Teil 2-->
 </head>
 <body> <!-- Hier ist was wir sehen können und wir nehemen eine erweiterung in CSS (aussehen)-->
   <h1>Hydroflora</h1>
@@ -14,39 +14,30 @@
   <div>
     {% for pflanze in pflanzen %}
 
-      <table>
       <form method="POST" action="">
-      <thead>
-        <tr>
-          <th>Pflanzenname</th>
-          <th>Wissenschaftl. Name</th>
-          <th>Familie</th>
-          <th>Bild</th>
-          <th>Vegetationszone</th>
-          <th>Standort</th>
-          <th>Gefahr</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ pflanze_form.hidden_tag() }}
-          {{ pflanze_form.name(placeholder = "Name") }}</td>
-          <td>{{ pflanze_form.wissenschaft_name(placeholder = "Wissenschaftl. Name") }}</td>
-            <td>{{ pflanze_form.familie(placeholder = "Familie") }}</td>
-            <td><img src="{{'/static/uploads/pflanze_' + pflanze.id|string + '.jpg'}}" alt="" height="50" width="50"></td>
-              <td>{{ pflanze_form.vegetationszone(placeholder = "Vegetationszone")}}</td>
-                <td>{{ pflanze_form.will_sonne(placeholder = "Standort")}}</td>
-                  <td>{{ pflanze_form.gefahr(placeholder = "Gefahr")}}
-          <input type="hidden" name="post_header" value="update pflanze">      
-          <input type="hidden" name="pflanze_to_update" value="{{pflanze.id}}"></td>
-          <td>{{ pflanze_form.abbrechen() }}</td>
-         <td>{{ pflanze_form.aendern() }}</td>
-         <td>{{ pflanze_form.loeschen() }}</td>
-         <td>{{ pflanze_form.bild_hochladen() }}</td>
-        </tr>
-      </tbody>
+      {{ pflanze_form.hidden_tag() }}
+      {{ pflanze_form.abbrechen() }}
+      {{ pflanze_form.aendern() }}
+      {{ pflanze_form.loeschen() }}
+      {{ pflanze_form.bild_hochladen() }}
+      <div id="nr5" class="height100percent">
+        <div class="oben">
+          <div id="nr1" class="height100percent">Pflanzenname: {{ pflanze_form.name(placeholder = "Name") }}</div>
+        </div>
+        <div class="unten">
+          <div class="linke_spalte" id="nr3"><img src="{{'/static/uploads/pflanze_' + pflanze.id|string + '.jpg'}}" alt="" class="image"></div>
+          <div class="rechte_spalte" id="nr2">
+            <div id="nr4" class="height20percent">Wissenschaftl. Name: {{ pflanze_form.wissenschaft_name(placeholder = "Wissenschaftl. Name") }}</div>
+            <div id="nr6" class="height20percent">Familie: {{ pflanze_form.familie(placeholder = "Familie") }}</div>
+            <div id="nr7" class="height20percent">Vegetationszone: {{ pflanze_form.vegetationszone(placeholder = "Vegetationszone")}}</div>
+            <div id="nr8" class="height20percent">Standort: {{ pflanze_form.will_sonne(placeholder = "Standort")}}</div>
+            <div id="nr9" class="height20percent">Gefahr: {{ pflanze_form.gefahr(placeholder = "Gefahr")}}</div>
+          </div>
+        </div>
+        <input type="hidden" name="post_header" value="update pflanze">      
+        <input type="hidden" name="pflanze_to_update" value="{{pflanze.id}}"></td>
       </form>
-      </table>
+    </div>
 
     {% endfor %}
 
