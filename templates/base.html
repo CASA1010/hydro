@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Hydroflora</title>
+      {% else %}
+      <title>Hydroflora</title>
+      {% endif %}
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-s">
+      <link href="../static/styles.css" rel="stylesheet"> <!--Verbindung HTML - CSS Teil 2-->
+      <link href="../static/pflanze_styles.css" rel="stylesheet"> <!--Verbindung HTML - CSS Teil 2-->
+    </head>
+    <body>
+        <div>Hydroflora: <a href="/index">Home</a></div>
+        <hr>
+        <h1>Hydroflora</h1>
+        <p>Die Kunst der Hydrokultur!</p>
+        {% block my_content %}{% endblock %}
+    </body>
+</html>

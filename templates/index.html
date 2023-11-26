@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Meine Webseite</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-s">
-    <link href="../static/styles.css" rel="stylesheet"> <!--Verbindung HTML - CSS Teil 2-->
-</head>
-<body> <!-- Hier ist was wir sehen können und wir nehemen eine erweiterung in CSS (aussehen)-->
-  <h1>Hydroflora</h1>
-  <p>Die Kunst der Hydrokultur!</p>
+
+{% extends "base.html" %}
+
+{% block my_content %}
 
   <form method="POST" action="">
     {{ pflanze_form.hidden_tag() }}
@@ -51,5 +43,4 @@
     {% endfor %}
   </table>
   </div>
-</body>
-</html>
+  {% endblock %}
