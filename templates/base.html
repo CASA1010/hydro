@@ -17,6 +17,16 @@
         <hr>
         <h1>Hydroflora</h1>
         <p>Die Kunst der Hydrokultur!</p>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         {% block my_content %}{% endblock %}
     </body>
 </html>
