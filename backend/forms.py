@@ -35,25 +35,25 @@ class LoginForm(FlaskForm):
 class PflanzeForm(FlaskForm):
 #Attribute der Klasse
 #-Eingabefelder
-    name = TextAreaField('Name', 
-                         validators = [DataRequired(),         
+    name = StringField('Name', 
+                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
                          Length(min=1, max=40)])
-    wissenschaft_name = TextAreaField('Wissenschaftl. Name', 
-                         validators = [DataRequired(),         
+    wissenschaft_name = StringField('Wissenschaftl. Name', 
+                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
                          Length(min=1, max=40)])
-    familie = TextAreaField('Familie', 
-                         validators = [DataRequired(),         
+    familie = StringField('Familie', 
+                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
                          Length(min=1, max=40)])
     bild = FileField('Bild',
-                     validators=[DataRequired()])
-    vegetationszone = TextAreaField('Vegetationszone', 
-                         validators = [DataRequired(),         
+                     validators=[DataRequired(message="Dieses Feld wird benötigt.")])
+    vegetationszone = StringField('Vegetationszone', 
+                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
                          Length(min=1, max=40)])
-    will_sonne = TextAreaField('Heller Standort?', 
-                         validators = [DataRequired(),         
+    will_sonne = StringField('Heller Standort?', 
+                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
                          Length(min=1, max=40)])
-    gefahr = TextAreaField('Gefahr', 
-                         validators = [DataRequired(),         
+    gefahr = StringField('Gefahr', 
+                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
                          Length(min=1, max=40)])
 
 #-Buttons

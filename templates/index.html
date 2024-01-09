@@ -3,18 +3,20 @@
 
 {% block my_content %}
 
-  <form method="POST" action="">
+<div class="container">
+
+  <form method="POST" action="" novalidate>
     {{ pflanze_form.hidden_tag() }}
-      {{ pflanze_form.name(placeholder = "Bitte Name der Pflanze eingeben") }}
-      {{ pflanze_form.wissenschaft_name() }}
-      {{ pflanze_form.familie() }}
-      {{ pflanze_form.vegetationszone() }}
-      {{ pflanze_form.will_sonne() }}
-      {{ pflanze_form.gefahr() }}
-      {{ pflanze_form.anlegen() }}
+      {{ wtf.form_field(pflanze_form.name) }}
+      {{ wtf.form_field(pflanze_form.wissenschaft_name) }}
+      {{ wtf.form_field(pflanze_form.familie) }}
+      {{ wtf.form_field(pflanze_form.vegetationszone) }}
+      {{ wtf.form_field(pflanze_form.will_sonne) }}
+      {{ wtf.form_field(pflanze_form.gefahr) }}
+      {{ wtf.form_field(pflanze_form.anlegen) }}
   </form>
   <div>
-    <table>
+    <table id="data" class="table">
       <thead>
         <tr>
           <th>Name</th>
@@ -37,10 +39,20 @@
           <td>{{pflanze.vegetationszone}}</td>
           <td>{{pflanze.will_sonne}}</td>
           <td>{{pflanze.gefahr}}</td>
-          <td><a href="{{url_for('form_pflanze_details', id=pflanze.id)}}">Details</a></td>
+          <td><a class="btn btn-default" href="{{url_for('form_pflanze_details', id=pflanze.id)}}" role="button">Details</a></td>
         </tr>
       </tbody>
     {% endfor %}
   </table>
   </div>
+</div>
   {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    $(document).ready(function(){
+      $('#data').DataTable(); //Hinzufügen von sorting, filtering, paging zur Tabelle
+    });
+  </script>
+{% endblock %}

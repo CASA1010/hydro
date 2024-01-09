@@ -6,6 +6,7 @@ from flask_wtf.csrf import CSRFProtect
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_login import UserMixin
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__, template_folder='../templates', static_folder ='../static') #Verbindung HTML - CSS Teil 1
 
@@ -16,6 +17,9 @@ login = LoginManager(app)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.db')
 db = SQLAlchemy(app)
+
+#Konfiguration von Flask-Bootstrap
+bootstrap = Bootstrap(app)
 
 #Konfigurstion der Datei-Ablage
 app.config['UPLOAD_FOLDER'] = os.path.join(app.static_folder, 'uploads')
