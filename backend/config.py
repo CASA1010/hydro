@@ -7,6 +7,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_login import UserMixin
 from flask_bootstrap import Bootstrap
+from enum import Enum
+
+class MsgCat(Enum):
+    OK = "success"
+    ERR = "danger"
+    WARN = "warning"
+    INFO = "info"
 
 app = Flask(__name__, template_folder='../templates', static_folder ='../static') #Verbindung HTML - CSS Teil 1
 

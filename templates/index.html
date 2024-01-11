@@ -5,7 +5,11 @@
 
 <div class="container">
 
-  <form method="POST" action="" novalidate>
+  <!--Formular mit der neu anzulegenden Pflanze-->
+  <a class="btn btn-default" href="{{ url_for('start_page', id='new')}}">Anlegen eines neuen Eintrags</a>
+  <dialog id="create-entry-modal">
+    <div class="container">
+      <form method="POST" action="" novalidate>
     {{ pflanze_form.hidden_tag() }}
       {{ wtf.form_field(pflanze_form.name) }}
       {{ wtf.form_field(pflanze_form.wissenschaft_name) }}
@@ -14,7 +18,14 @@
       {{ wtf.form_field(pflanze_form.will_sonne) }}
       {{ wtf.form_field(pflanze_form.gefahr) }}
       {{ wtf.form_field(pflanze_form.anlegen) }}
-  </form>
+     </form>
+     <br>
+     <br>
+     <button id="close-modal-button" class="btn btn-default">Abbrechen</button>
+    </div>
+  </dialog>
+
+  <!--Tabelle mit den bereits in der DB befindlichen Pflanzen-->
   <div>
     <table id="data" class="table">
       <thead>
@@ -51,8 +62,26 @@
 {% block scripts %}
   {{ super() }}
   <script>
-    $(document).ready(function(){
+    const openButton = document.getElementById('open-modal-button')
+    const closeButton = document.getElementById('close-modal-button')
+    const modal = document.getElementById('create-entry-modal')
+    
+    var showModal = false
+    if ( "{{ showModal }}" == "True" ){
+      showModal = true
+    }
+    
+    closeButton.addEventListener("click", () => {
+      modal.close()
+    })
+    
+
+    $(document).ready(function () {
       $('#data').DataTable(); //Hinzufügen von sorting, filtering, paging zur Tabelle
+      if (showModal == true){
+        const modal = document.getElementById('create-entry-modal')
+        modal.showModal()
+      }
     });
   </script>
 {% endblock %}

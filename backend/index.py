@@ -1,4 +1,4 @@
-from config import app, db, Pflanze, User
+from config import app, db, Pflanze, User, MsgCat
 from flask import render_template, redirect, url_for, request, flash
 import forms
 from flask_login import current_user, login_user
@@ -10,12 +10,12 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = forms.RegistrationForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #wenn Benutzereingaben OK
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash(message='Glückwunsch, Sie haben sich erfolgreich registriert!', category='success')
+        flash(message='Glückwunsch, Sie haben sich erfolgreich registriert!', category=MsgCat.OK.value)
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -97,12 +97,18 @@ def form_pflanze_details(id):
 #Übersichts-Seite
 @app.route('/', methods = ['GET','POST'])
 @app.route('/index', methods = ['GET','POST'])
-def start_page():
+@app.route('/index/<id>', methods = ['GET','POST'])
+def start_page(id=0):
     
+    if (id == "new"):
+        showModal = True
+    else:
+        showModal = False
     #wenn wir uns im Eingabe-Formular für die Pflanzen befinden und alle Daten-Validierungen
     #dieses Formulars erfolgreich waren
     pflanze_form = forms.PflanzeForm()
     if pflanze_form.validate_on_submit():
+        print("valid")
         if request.form.get('post_header') == 'update pflanze':
             #pflanze_form = forms.PflanzeForm()
             pflanze = Pflanze.query.filter_by(id = request.form.get('pflanze_to_update')).first()
@@ -126,10 +132,10 @@ def start_page():
         
         else:
         
-            
+            print("anlegen")
             #Instanz der Pflanze-Klasse anlegen
-             pflanze_form = forms.PflanzeForm()
-             pflanze = Pflanze(  name = pflanze_form.name.data,
+            pflanze_form = forms.PflanzeForm()
+            pflanze = Pflanze(  name = pflanze_form.name.data,
                                 wissenschaft_name = pflanze_form.wissenschaft_name.data,
                                 familie = pflanze_form.familie.data,
                                 vegetationszone = pflanze_form.vegetationszone.data,
@@ -148,7 +154,8 @@ def start_page():
 
     return render_template('index.html',
                         pflanzen = pflanzen,
-                        pflanze_form = pflanze_form
+                        pflanze_form = pflanze_form,
+                        showModal = showModal  
                         )
 
 

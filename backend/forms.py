@@ -7,7 +7,7 @@ from config import User
 
 #Formular für die Registrierung neuer User
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired(message="Dieses Feld wird benötigt.")])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
@@ -44,8 +44,8 @@ class PflanzeForm(FlaskForm):
     familie = StringField('Familie', 
                          validators = [DataRequired(message="Dieses Feld wird benötigt."),         
                          Length(min=1, max=40)])
-    bild = FileField('Bild',
-                     validators=[DataRequired(message="Dieses Feld wird benötigt.")])
+    bild = FileField('Bild')
+                     #validators=[DataRequired(message="Dieses Feld wird benötigt.")])
     vegetationszone = StringField('Vegetationszone', 
                          validators = [DataRequired(message="Dieses Feld wird benötigt."),         
                          Length(min=1, max=40)])
