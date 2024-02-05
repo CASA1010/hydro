@@ -1,43 +1,37 @@
-
 {% extends "base.html" %}
 
 {% block my_content %}
 
-<div class="container"> <!--neu-->
-
-  <div>
-
-    {% for pflanze in pflanzen %}
-
-      <form method="POST" action=""> <!--neu-->
-     
-      {{ pflanze_form.hidden_tag() }}
-      {{ pflanze_form.abbrechen() }}
-      {{ pflanze_form.aendern() }}
-      {{ pflanze_form.loeschen() }}
-      {{ pflanze_form.bild_hochladen() }}
-      <div id="nr5" class="height100percent">
-        <div class="oben">
-          <div id="nr1" class="height100percent">Pflanzenname: {{ pflanze_form.name(placeholder = "Name") }}</div>
-        </div>
-        <div class="unten">
-          <div class="linke_spalte" id="nr3"><img src="{{'/static/uploads/pflanze_' + pflanze.id|string + '.jpg'}}" alt="" class="image"></div>
-          <div class="rechte_spalte" id="nr2">
-            <div id="nr4" class="height20percent">Wissenschaftl. Name: {{ pflanze_form.wissenschaft_name(placeholder = "Wissenschaftl. Name") }}</div>
-            <div id="nr6" class="height20percent">Familie: {{ pflanze_form.familie(placeholder = "Familie") }}</div>
-            <div id="nr7" class="height20percent">Vegetationszone: {{ pflanze_form.vegetationszone(placeholder = "Vegetationszone")}}</div>
-            <div id="nr8" class="height20percent">Standort: {{ pflanze_form.will_sonne(placeholder = "Standort")}}</div>
-            <div id="nr9" class="height20percent">Gefahr: {{ pflanze_form.gefahr(placeholder = "Gefahr")}}</div>
+<!--Formular für die zu ändernde Pflanze-->
+  <div class="container">
+      <form method="post" action="" novalidate enctype="multipart/form-data">
+        {{ pflanze_form.hidden_tag() }}
+        <div class="row">
+          <div class="col-md-6">
+              {{ wtf.form_field(pflanze_form.name) }}
+          </div>
+          <div class="col-md-6">
+            {{ wtf.form_field(pflanze_form.wissenschaft_name) }}
           </div>
         </div>
-        <input type="hidden" name="post_header" value="update pflanze">      
-        <input type="hidden" name="pflanze_to_update" value="{{pflanze.id}}"></td>
-      </form>
-    </div>
-
-    {% endfor %}
-
+        <div class="row">
+          <div class="col-md-8">
+            <img src="{{pflanze_bild_datei}}" alt="" width="auto" height="500">
+            {{ wtf.form_field(pflanze_form.bild) }}
+          </div>
+          <div class="col-md-4">
+            {{ wtf.form_field(pflanze_form.familie) }}
+            {{ wtf.form_field(pflanze_form.vegetationszone) }}
+            {{ wtf.form_field(pflanze_form.will_sonne) }}
+            {{ wtf.form_field(pflanze_form.gefahr) }}
+          </div>
+        </div>
+        <br>
+              {{ wtf.form_field(pflanze_form.aendern) }}
+              {{ wtf.form_field(pflanze_form.loeschen) }}
+              <br>
+              <br>
+              <br>
+              {{ wtf.form_field(pflanze_form.abbrechen) }}
   </div>
-</div>
-  
   {% endblock %}

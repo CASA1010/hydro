@@ -1,68 +1,73 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, FloatField, DateField, FileField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from datetime import date
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField
+from wtforms.validators import ValidationError, DataRequired, Length, Email, EqualTo
 from config import User
 
 
-#Formular für die Registrierung neuer User
+#Formulare für Benutzer
+#-Registrierung
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(message="Dieses Feld wird benötigt.")])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
+    username = StringField('Benutzername',
+                            validators=[DataRequired(message="Bitte vergeben Sie Ihren gewünschten Benutzernamen.")])
+    email = StringField('EMail-Adresse',
+                        validators=[DataRequired(message="Bitte geben Sie eine EMail-Adresse an, unter der wir Sie erreichen können."),
+                                    Email(message="Bitte geben Sie eine gültige EMail-Adresse ein.")])
+    password = PasswordField('Passwort',
+                            validators=[DataRequired(message="Bitte geben Sie Ihr Passwort ein.")])
+    password2 = PasswordField('Passwort-Wiederholung',
+                            validators=[DataRequired(message="Bitte geben Sie das gewünschte Passwort erneut ein."),
+                            EqualTo(fieldname='password', message="Passwort und Passwort-Wiederholung sind nicht gleich.")])
+
+    register = SubmitField('Registrieren')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('Please use a different username.')
+            raise ValidationError("Dieser Benutzername ist bereits vergeben.")
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('Please use a different email address.')
+            raise ValidationError("Diese EMail-Adresse ist bereits vergeben.")
 
-#Formular für die Login-Seite
+#-Login
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    username = StringField('Benutzername', validators=[DataRequired(message="Bitte geben Sie Ihren Benutzernamen ein.")])
+    password = PasswordField('Passwort', validators=[DataRequired(message="Bitte geben Sie Ihr Passwort ein.")])
+    remember_me = BooleanField('Angemeldet bleiben')
 
-#Definition des GUI-Eingabeformulars für neue / zu ändernde Pflanzen todo esto estaba bien
+    login = SubmitField('Anmelden')
+
+#-Sonstige (für Admin-Bereich, User-Details)
+class UserForm(FlaskForm):
+    username = StringField('Benutzername', validators=[DataRequired(message="Bitte geben Sie Ihren Benutzernamen ein.")])
+    email = StringField('EMail-Adresse', validators=[DataRequired(message="Bitte geben Sie Ihre EMail-Adresse ein."),
+                                                     Email(message="Bitte geben Sie eine gültige EMail-Adresse ein.")])
+
+    aendern = SubmitField('Ändern')
+    abbrechen = SubmitField('Abbrechen')
+
+#Formular für Pflanzen
 class PflanzeForm(FlaskForm):
-#Attribute der Klasse
-#-Eingabefelder
     name = StringField('Name', 
-                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
-                         Length(min=1, max=40)])
-    wissenschaft_name = StringField('Wissenschaftl. Name', 
-                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
-                         Length(min=1, max=40)])
-    familie = StringField('Familie', 
-                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
-                         Length(min=1, max=40)])
+                        validators = [DataRequired(message="Der Name der Pflanze muss angegeben werden."),         
+                                    Length(min=0, max=40, message="Der Name darf maximal 40 Zeichen lang sein")])
+    wissenschaft_name = StringField('Wissenschaftl. Name',      
+                        validators = [Length(min=0, max=40, message="Der Wissenschaftl. Name darf maximal 40 Zeichen lang sein")])
+    familie = StringField('Familie',       
+                        validators = [Length(min=0, max=40, message="Die Familie darf maximal 40 Zeichen lang sein")])
     bild = FileField('Bild')
-                     #validators=[DataRequired(message="Dieses Feld wird benötigt.")])
-    vegetationszone = StringField('Vegetationszone', 
-                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
-                         Length(min=1, max=40)])
-    will_sonne = StringField('Heller Standort?', 
-                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
-                         Length(min=1, max=40)])
-    gefahr = StringField('Gefahr', 
-                         validators = [DataRequired(message="Dieses Feld wird benötigt."),         
-                         Length(min=1, max=40)])
-
-#-Buttons
+                    #validators= [DataRequired(message="Es muss ein Bild der Pflanze hochgeladen sein.")])
+    vegetationszone = StringField('Vegetationszone',        
+                                validators = [Length(min=0, max=40, message="Die Vegetationszone darf maximal 40 Zeichen lang sein")])
+    will_sonne = StringField('Heller Standort?',      
+                            validators = [Length(min=0, max=40, message="Der Standort darf maximal 40 Zeichen lang sein")])
+    gefahr = StringField('Gefahr',       
+                        validators = [Length(min=0, max=40, message="Die Gefahrenangaben dürfen maximal 40 Zeichen lang sein")])
+    
     anlegen = SubmitField('Anlegen')
     aendern = SubmitField('Ändern')
     loeschen = SubmitField('Löschen')
     abbrechen = SubmitField('Abbrechen')
     bild_hochladen = SubmitField('Bild hochladen')
-    
-    
-
-
+    anwenden = SubmitField('Anwenden')

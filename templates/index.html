@@ -1,87 +1,41 @@
-
 {% extends "base.html" %}
 
 {% block my_content %}
-
 <div class="container">
+<h1>Hydro-Pflanzen, ein neuer Trend!</h1>
+<br>
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
 
-  <!--Formular mit der neu anzulegenden Pflanze-->
-  <a class="btn btn-default" href="{{ url_for('start_page', id='new')}}">Anlegen eines neuen Eintrags</a>
-  <dialog id="create-entry-modal">
-    <div class="container">
-      <form method="POST" action="" novalidate>
-    {{ pflanze_form.hidden_tag() }}
-      {{ wtf.form_field(pflanze_form.name) }}
-      {{ wtf.form_field(pflanze_form.wissenschaft_name) }}
-      {{ wtf.form_field(pflanze_form.familie) }}
-      {{ wtf.form_field(pflanze_form.vegetationszone) }}
-      {{ wtf.form_field(pflanze_form.will_sonne) }}
-      {{ wtf.form_field(pflanze_form.gefahr) }}
-      {{ wtf.form_field(pflanze_form.anlegen) }}
-     </form>
-     <br>
-     <br>
-     <button id="close-modal-button" class="btn btn-default">Abbrechen</button>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            {% for pflanze in pflanzen %}
+            {% if loop.first %}
+            <div class="item active">
+            {% else %}
+            <div class="item">
+            {% endif %}
+                <img src="../static/uploads/Pflanze_{{pflanze.id}}.jpg" alt="..." width="auto" height="700" margin="auto">
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-  </dialog>
-
-  <!--Tabelle mit den bereits in der DB befindlichen Pflanzen-->
-  <div>
-    <table id="data" class="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Wissenschaftl. Name</th>
-          <th>Familie</th>
-          <th>Bild</th>
-          <th>Vegetationszone</th>
-          <th>Standort</th>
-          <th>Gefahr</th>
-          <th>Aktion</th>
-        </tr>
-      </thead>
-    {% for pflanze in pflanzen %}
-      <tbody>
-        <tr>
-          <td>{{pflanze.name}}</td>
-          <td>{{pflanze.wissenschaft_name}}</td>
-          <td>{{pflanze.familie}}</td>
-          <td><img src="{{'/static/uploads/pflanze_' + pflanze.id|string + '.jpg'}}" alt="" height="50" width="50"></td>
-          <td>{{pflanze.vegetationszone}}</td>
-          <td>{{pflanze.will_sonne}}</td>
-          <td>{{pflanze.gefahr}}</td>
-          <td><a class="btn btn-default" href="{{url_for('form_pflanze_details', id=pflanze.id)}}" role="button">Details</a></td>
-        </tr>
-      </tbody>
-    {% endfor %}
-  </table>
-  </div>
+    <br>
+    <h2>Hier findest Du Anregungen - Austausch mit "Enthysiasten" - Tipps - Bezugsquellen</h2>
 </div>
-  {% endblock %}
-
-{% block scripts %}
-  {{ super() }}
-  <script>
-    const openButton = document.getElementById('open-modal-button')
-    const closeButton = document.getElementById('close-modal-button')
-    const modal = document.getElementById('create-entry-modal')
-    
-    var showModal = false
-    if ( "{{ showModal }}" == "True" ){
-      showModal = true
-    }
-    
-    closeButton.addEventListener("click", () => {
-      modal.close()
-    })
-    
-
-    $(document).ready(function () {
-      $('#data').DataTable(); //Hinzufügen von sorting, filtering, paging zur Tabelle
-      if (showModal == true){
-        const modal = document.getElementById('create-entry-modal')
-        modal.showModal()
-      }
-    });
-  </script>
 {% endblock %}

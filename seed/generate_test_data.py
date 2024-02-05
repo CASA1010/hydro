@@ -1,4 +1,4 @@
-from config import app,db,Pflanze
+from backend.config import app,db,Pflanze
 
 app.app_context().push()
 

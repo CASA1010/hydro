@@ -37,13 +37,20 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="{{ url_for('start_page') }}">Anregungen</a></li>
+          <li><a href="{{ url_for('pflanzen_page') }}">Anregungen</a></li>
+          {% if current_user.is_admin %}
+          <li><a href="{{ url_for('administer') }}">Admin-Bereich</a></li>
+          {% else %}
+          <li class="disabled"><a href="{{ url_for('administer') }}">Admin-Bereich</a></li>
+          {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if current_user.is_authenticated %}
             <li class="disabled"><a href="{{ url_for('login') }}">Anmelden</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
           {% else %}
             <li><a href="{{ url_for('login') }}">Anmelden</a></li>
+            <li class="disabled"><a href="{{ url_for('logout') }}">Logout</a></li>
           {% endif %}
         </ul>
       </div><!-- /.navbar-collapse -->
