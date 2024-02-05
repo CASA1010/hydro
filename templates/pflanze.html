@@ -3,10 +3,14 @@
 
 {% block my_content %}
 
+<div class="container"> <!--neu-->
+
   <div>
+
     {% for pflanze in pflanzen %}
 
-      <form method="POST" action="">
+      <form method="POST" action=""> <!--neu-->
+     
       {{ pflanze_form.hidden_tag() }}
       {{ pflanze_form.abbrechen() }}
       {{ pflanze_form.aendern() }}
@@ -34,5 +38,6 @@
     {% endfor %}
 
   </div>
+</div>
   
   {% endblock %}
