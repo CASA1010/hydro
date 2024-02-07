@@ -1,4 +1,5 @@
-from config import app, db, Pflanze, User, MsgCat
+from config import app, db, MsgCat
+from models import Pflanze, User
 from flask import Flask, render_template, redirect, url_for, request, flash
 from werkzeug.utils import secure_filename
 import forms

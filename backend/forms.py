@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField
 from wtforms.validators import ValidationError, DataRequired, Length, Email, EqualTo
-from config import User
+from models import User
 
 
 #Formulare für Benutzer
