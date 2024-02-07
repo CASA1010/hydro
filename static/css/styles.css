@@ -1,9 +1,11 @@
-.carousel img {
 
-	margin: auto;
-
-}
 
 .carousel-inner {
 	max-height: 600px !important;
+}
+
+img {
+	height: 400px;
+	width: 400px;
+	object-fit: contain;
 }

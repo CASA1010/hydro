@@ -2,7 +2,7 @@
 
 {% block my_content %}
 <div class="container">
-<h1>Hydro-Pflanzen, ein neuer Trend!</h1>
+<h1>Hydroflora - Die Kunst der Hydrokultur</h1>
 <br>
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
@@ -20,7 +20,7 @@
             {% else %}
             <div class="item">
             {% endif %}
-                <img src="../static/uploads/Pflanze_{{pflanze.id}}.jpg" alt="..." width="auto" height="700" margin="auto">
+                <img class="center-block" src="../static/uploads/Pflanze_{{pflanze.id}}.jpg" alt="..." width="auto" height="100">
             </div>
             {% endfor %}
         </div>
