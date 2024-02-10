@@ -2,6 +2,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField
 from wtforms.validators import ValidationError, DataRequired, Length, Email, EqualTo
 from models import User
+from sqlalchemy import and_, not_
+from config import db
+from flask_login import current_user
 
 
 #Formulare für Benutzer
@@ -47,6 +50,17 @@ class UserForm(FlaskForm):
     passwort_aendern = SubmitField('Neues Passwort vergeben')
     aendern = SubmitField('Ändern')
     abbrechen = SubmitField('Abbrechen')
+
+    def validate_username(self, username):
+        user = db.session.query(User).filter(and_(User.username == username.data, User.id != current_user.id)).first()
+        if user is not None:
+            raise ValidationError("Dieser Benutzername ist bereits vergeben.")
+
+    def validate_email(self, email):
+        #user = User.query.filter_by(email=email.data).first()
+        user = db.session.query(User).filter(and_(User.email == email.data, User.id != current_user.id)).first()
+        if user is not None:
+            raise ValidationError("Diese EMail-Adresse ist bereits vergeben.")
 
 #Formular für Pflanzen
 class PflanzeForm(FlaskForm):

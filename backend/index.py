@@ -17,11 +17,15 @@ def user_details(id):
     if request.method == 'POST':
         #wenn im Ändern-Modus
         if 'aendern' in request.form:
-            for user in users:
-                user.username = form.username.data
-                user.email = form.email.data
+            if form.validate_on_submit():
+                for user in users:
+                    user.username = form.username.data
+                    user.email = form.email.data
         
-            db.session.commit()
+                    db.session.commit()
+                    flash('Ihre Änderungen wurden erfolgreich übernommen.', MsgCat.OK.value)
+        elif 'abbrechen' in request.form:
+            return redirect(url_for('pflanzen_page'))
     else:
         for user in users:
             form.username.data = user.username
