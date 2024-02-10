@@ -44,6 +44,7 @@ class UserForm(FlaskForm):
     email = StringField('EMail-Adresse', validators=[DataRequired(message="Bitte geben Sie Ihre EMail-Adresse ein."),
                                                      Email(message="Bitte geben Sie eine gültige EMail-Adresse ein.")])
 
+    passwort_aendern = SubmitField('Neues Passwort vergeben')
     aendern = SubmitField('Ändern')
     abbrechen = SubmitField('Abbrechen')
 
