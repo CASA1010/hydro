@@ -2,14 +2,73 @@
 
 {% block my_content %}
   <div class="container">
-      <form method="POST" action="">
+<!--Formular für das Ändern des Passworts-->
+  <dialog id="change-password-modal">
+  <h1>Ändern des Passworts</h1>
+  <br>
+  <div class="container">
+    <form method="post" action="" novalidate>
+      {{ password_change_form.hidden_tag() }}
+      <div class="row">
+        <div class="col-md-6">
+            {{ wtf.form_field(password_change_form.password) }}
+        </div>
+        <div class="col-md-6">
+          {{ wtf.form_field(password_change_form.password_new) }}
+          {{ wtf.form_field(password_change_form.password_new2) }}
+        </div>
+      </div>
+      <br>
+        {{ wtf.form_field(password_change_form.passwort_aendern) }}
+    </form>
+      <br>
+      <br>
+      <button id="close-modal-button" class="btn btn-default">Abbrechen</button>
+  </div>
+</dialog>
+
+<!--Formular für das Ändern von Username und Email-->
+    <form method="POST" action="">
         {{ form.hidden_tag() }}
         {{ wtf.form_field(form.username) }}
         {{ wtf.form_field(form.email) }}
-
+        <br>   
+        <a class="btn btn-default" href="{{ url_for('user_details', id=current_user.id, pwd="pwd") }}">Neues Passwort vergeben</a>
+        {{ wtf.form_field(form.aendern) }}
         <br>
-        {{ form.abbrechen() }}
-        {{ form.passwort_aendern }}
-        {{ form.aendern() }}
+        <br>
+        {{ wtf.form_field(form.abbrechen) }}
   </div>
+  {% endblock %}
+
+  {% block scripts %}
+  {{ super() }}
+  <script>
+    const openButton = document.getElementById('open-modal-button')
+    const closeButton = document.getElementById('close-modal-button')
+    const modal = document.getElementById('change-password-modal')
+
+    var showModal = false
+    if ( "{{ showModal }}" == "True" ){
+      showModal = true
+    }
+
+  
+    //openButton.addEventListener("click", () => {
+    //  showModal = true
+    //  modal.showModal()
+    //})
+    closeButton.addEventListener("click", () => {
+      showModal = false
+      modal.close()
+    })
+  
+    $(document).ready(function () {
+      //Modal ggf. anzeigen
+      if (showModal == true){
+        const modal = document.getElementById('change-password-modal')
+        modal.showModal()
+      }
+    });
+  </script>
   {% endblock %}

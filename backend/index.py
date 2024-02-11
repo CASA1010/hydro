@@ -9,30 +9,43 @@ from urllib import parse
 
 
 
-@app.route("/user/<id>", methods=['GET','POST'])
-def user_details(id):
+@app.route("/user/<id>/<pwd>", methods=['GET','POST'])
+def user_details(id, pwd):
     form = forms.UserForm()
-    users = db.session.query(User).filter(User.id == id)
+    user = db.session.query(User).filter(User.id == id).first()
+    password_change_form = forms.PasswordChangeForm()
+    
+    #Modal zum Passwort ändern aktiv?
+    if pwd == "pwd":
+        showModal = True
+    else:
+        showModal = False
 
     if request.method == 'POST':
         #wenn im Ändern-Modus
         if 'aendern' in request.form:
             if form.validate_on_submit():
-                for user in users:
-                    user.username = form.username.data
-                    user.email = form.email.data
+                user.username = form.username.data
+                user.email = form.email.data
+
+                db.session.commit()
+                flash('Ihre Änderungen wurden erfolgreich übernommen.', MsgCat.OK.value)
+        elif 'passwort_aendern' in request.form:
+            if password_change_form.validate_on_submit():
+                user.set_password(password_change_form.password_new.data)
         
-                    db.session.commit()
-                    flash('Ihre Änderungen wurden erfolgreich übernommen.', MsgCat.OK.value)
+                db.session.commit()
+                flash('Ihre Änderungen wurden erfolgreich übernommen.', MsgCat.OK.value)
         elif 'abbrechen' in request.form:
             return redirect(url_for('pflanzen_page'))
     else:
-        for user in users:
-            form.username.data = user.username
-            form.email.data = user.email
-        
+        form.username.data = user.username
+        form.email.data = user.email
+    
     return render_template('user.html',
-                           form = form)
+                           form = form,
+                           password_change_form = password_change_form,
+                           showModal = showModal)
 
 
 @app.route('/admin')

@@ -49,7 +49,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Angemeldet als: {{ current_user.username }}<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ url_for('user_details',id=current_user.id) }}">Eigenes Profil</a></li>
+              <li><a href="{{ url_for('user_details',id=current_user.id, pwd="std") }}">Eigenes Profil</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>

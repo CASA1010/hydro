@@ -33,6 +33,22 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError("Diese EMail-Adresse ist bereits vergeben.")
 
+#-Passwort ändern
+class PasswordChangeForm(FlaskForm):
+    password = PasswordField('Aktuelles Passwort',
+                            validators=[DataRequired(message="Bitte geben Sie Ihr aktuelles Passwort ein.")])
+    password_new = PasswordField('Neues Passwort',
+                            validators=[DataRequired(message="Bitte geben Sie Ihr neues Passwort ein.")])
+    password_new2 = PasswordField('Passwort-Wiederholung',
+                            validators=[DataRequired(message="Bitte geben Sie das gewünschte Passwort erneut ein."),
+                            EqualTo(fieldname='password_new', message="Passwort und Passwort-Wiederholung sind nicht gleich.")])
+
+    passwort_aendern = SubmitField('Neues Passwort vergeben')
+
+    def validate_password(self, password):
+        if not current_user.check_password(password.data):
+            raise ValidationError("aktuelles Passwort inkorrekt.")
+
 #-Login
 class LoginForm(FlaskForm):
     username = StringField('Benutzername', validators=[DataRequired(message="Bitte geben Sie Ihren Benutzernamen ein.")])
@@ -47,8 +63,7 @@ class UserForm(FlaskForm):
     email = StringField('EMail-Adresse', validators=[DataRequired(message="Bitte geben Sie Ihre EMail-Adresse ein."),
                                                      Email(message="Bitte geben Sie eine gültige EMail-Adresse ein.")])
 
-    passwort_aendern = SubmitField('Neues Passwort vergeben')
-    aendern = SubmitField('Ändern')
+    aendern = SubmitField('Benutzername/ EMail ändern')
     abbrechen = SubmitField('Abbrechen')
 
     def validate_username(self, username):
