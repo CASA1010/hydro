@@ -39,3 +39,11 @@
         </table>
     </div>
 {% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+  $(document).ready(function () {
+    $('#data').DataTable(); // table mit id "data" um sort/filter/paginate erweitern //TODO: Text in Deutsch
+  });
+</script>
+{% endblock %}
